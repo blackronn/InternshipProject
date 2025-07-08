@@ -1,5 +1,6 @@
 package com.example.InternshipProject.entities.concretes;
 
+import com.example.InternshipProject.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Intern {
+public class Intern extends BaseEntity {
 
     @Id
     @Column(name="INTERN_ID")
