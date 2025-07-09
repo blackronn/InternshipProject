@@ -1,5 +1,6 @@
 package com.example.InternshipProject.services;
 
+import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.InternshipProject.entities.concretes.Intern;
@@ -19,6 +20,22 @@ public class InternServiceImpl implements InternService{
     @Override
     public Intern getInternByID(int id) {
         return internRepository.findById(id).orElse(null);
+    }
+    @Override
+    public void addIntern(CreateInternRequest request) {
+        Intern intern = new Intern();
+
+        intern.setName(request.getName());
+        intern.setSurname(request.getSurname());
+        intern.setEmail(request.getEmail());
+        intern.setPhoneNumber(request.getPhoneNumber());
+        intern.setPassword(request.getPassword());
+        intern.setStartDate(request.getStartDate());
+        intern.setEndDate(request.getEndDate());
+        intern.setUniversity(request.getUniversity());
+        intern.setDepartment(request.getDepartment());
+
+        internRepository.save(intern);
     }
 
     @Override
