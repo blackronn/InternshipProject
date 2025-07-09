@@ -1,14 +1,12 @@
 package com.example.InternshipProject.controllers;
 
 import com.example.InternshipProject.entities.concretes.Intern;
-import com.example.InternshipProject.services.InternService;
-import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
+import com.example.InternshipProject.services.abstracts.InternService.InternService;
+import com.example.InternshipProject.services.dtos.requests.InternRequest.CreateInternRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/interns")

@@ -1,15 +1,13 @@
-package com.example.InternshipProject.services;
+package com.example.InternshipProject.services.concretes;
 
-import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.InternshipProject.services.abstracts.InternService.InternService;
+import com.example.InternshipProject.services.dtos.requests.InternRequest.CreateInternRequest;
 import org.springframework.stereotype.Service;
 import com.example.InternshipProject.entities.concretes.Intern;
 import com.example.InternshipProject.repositories.InternRepository;
 
-import java.util.List;
-
 @Service
-public class InternServiceImpl implements InternService{
+public class InternServiceImpl implements InternService {
 
     private final InternRepository internRepository;
 
