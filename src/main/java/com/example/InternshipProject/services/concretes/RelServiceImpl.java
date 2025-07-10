@@ -10,9 +10,11 @@ import com.example.InternshipProject.services.abstracts.InternMentorRelService;
 import com.example.InternshipProject.services.dtos.requests.CreateRelRequest;
 import com.example.InternshipProject.services.dtos.requests.UpdateRelRequest;
 import com.example.InternshipProject.services.dtos.responses.RelResponse;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RelServiceImpl implements InternMentorRelService {
 
     private final InternMentorRelRepository relRepository;
