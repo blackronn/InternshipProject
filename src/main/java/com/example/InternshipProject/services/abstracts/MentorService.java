@@ -9,5 +9,7 @@ public interface MentorService {
     Mentor getMentorById(int id);
     void addMentor(CreateMentorRequest request);
     Mentor deleteMentorById(int id);
+    Mentor updateMentorById(int id, CreateMentorRequest request);
+
 
 }

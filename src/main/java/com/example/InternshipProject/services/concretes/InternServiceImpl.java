@@ -43,6 +43,23 @@ public class InternServiceImpl implements InternService {
         return intern;
     }
 
+    @Override
+    public Intern updateIntern(int id, Intern internDetails) {
+        Intern intern = getInternByID(id);
+
+        intern.setName(internDetails.getName());
+        intern.setSurname(internDetails.getSurname());
+        intern.setEmail(internDetails.getEmail());
+        intern.setPhoneNumber(internDetails.getPhoneNumber());
+        intern.setPassword(internDetails.getPassword());
+        intern.setStartDate(internDetails.getStartDate());
+        intern.setEndDate(internDetails.getEndDate());
+        intern.setUniversity(internDetails.getUniversity());
+        intern.setDepartment(internDetails.getDepartment());
+
+        return internRepository.save(intern);
+    }
+
 
 
 }

@@ -9,5 +9,7 @@ public interface InternService {
     Intern getInternByID(int id);
     void addIntern(CreateInternRequest request);
     Intern deleteInternByID(int id);
+    Intern updateIntern(int id, Intern internDetails);
+
 
 }

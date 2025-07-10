@@ -33,5 +33,11 @@ public class InternController {
         Intern deletedIntern = internService.deleteInternByID(id);
         return ResponseEntity.ok(deletedIntern);
 
-}
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Intern> updateIntern(@PathVariable int id, @RequestBody Intern internDetails) {
+        Intern updatedIntern = internService.updateIntern(id, internDetails);
+        return ResponseEntity.ok(updatedIntern);
+    }
+
 }

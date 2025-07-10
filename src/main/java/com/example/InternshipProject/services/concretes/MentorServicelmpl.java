@@ -36,4 +36,18 @@ public class MentorServicelmpl implements MentorService {
         mentorRepository.deleteById(id);
         return mentor;
         }
+        @Override
+        public Mentor updateMentorById(int id, CreateMentorRequest request) {
+        Mentor mentor = getMentorById(id);
+
+        mentor.setName(request.getName());
+        mentor.setSurname(request.getSurname());
+        mentor.setEmail(request.getEmail());
+        mentor.setPhoneNumber(request.getPhoneNumber());
+        mentor.setPassword(request.getPassword());
+        mentor.setTitle(request.getTitle());
+
+        return mentorRepository.save(mentor);
     }
+
+}
