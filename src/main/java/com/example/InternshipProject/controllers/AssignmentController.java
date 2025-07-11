@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/assignments")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AssignmentController {
 
     private final AssignmentService assignmentService;
