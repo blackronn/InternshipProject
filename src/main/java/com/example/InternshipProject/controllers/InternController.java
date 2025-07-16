@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/interns")
+@CrossOrigin
 public class InternController {
 
     private final InternService internService;

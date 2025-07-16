@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/relations")
+@CrossOrigin
 public class RelationController {
 
     private final InternMentorRelService relService;
