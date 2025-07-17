@@ -1,6 +1,7 @@
 package com.example.InternshipProject.controllers;
 
 import com.example.InternshipProject.entities.concretes.Intern;
+import com.example.InternshipProject.repositories.InternRepository;
 import com.example.InternshipProject.services.abstracts.InternService;
 import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/interns")
-@CrossOrigin
+
 public class InternController {
 
     private final InternService internService;
@@ -20,6 +23,12 @@ public class InternController {
         this.internService = internService;
 
     }
+    @GetMapping
+    public List<Intern> getAll() {
+        // Gelen isteği, işi yapması için service katmanına paslıyoruz.
+        return this.internService.getAllInterns();
+    }
+
     @GetMapping("/{id}")
     public Intern getInternByID(@PathVariable int id) {
         return internService.getInternByID(id);

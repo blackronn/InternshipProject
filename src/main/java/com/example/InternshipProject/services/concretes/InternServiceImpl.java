@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.example.InternshipProject.entities.concretes.Intern;
 import com.example.InternshipProject.repositories.InternRepository;
 
+import java.util.List;
+
 @Service
 public class InternServiceImpl implements InternService {
 
@@ -58,6 +60,11 @@ public class InternServiceImpl implements InternService {
         intern.setDepartment(internDetails.getDepartment());
 
         return internRepository.save(intern);
+    }
+    @Override
+    public List<Intern> getAllInterns() {
+        // Repository nesnesi üzerinden findAll() metodunu çağırıyoruz.
+        return this.internRepository.findAll();
     }
 
 

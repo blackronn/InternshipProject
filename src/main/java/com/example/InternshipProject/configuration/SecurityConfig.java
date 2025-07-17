@@ -14,14 +14,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Modern API'lerde genellikle devre dışı bırakılır
+                .cors(withDefaults()) // CORS ayarımız kalıyor, bu doğru.
+                .csrf(csrf -> csrf.disable()) // CSRF koruması kapalı kalıyor.
+
+                // 👇 YETKİLENDİRME KISMINI GEÇİCİ OLARAK DEĞİŞTİRİYORUZ
                 .authorizeHttpRequests(auth -> auth
-                        // Aşağıdaki satır, /api/ ile başlayan tüm adreslere izinsiz (şifresiz) erişime izin verir.
-                        .requestMatchers("/api/**").permitAll()
-                        // Diğer tüm istekler kimlik doğrulaması gerektirsin.
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(withDefaults()); // Tarayıcı tabanlı Basic Auth penceresini etkinleştirir
+                        // Bu satır, gelen isteğin adresi ne olursa olsun,
+                        // hepsine şimdilik sorgusuz sualsiz izin ver demek.
+                        .anyRequest().permitAll()
+                );
+
         return http.build();
     }
 }

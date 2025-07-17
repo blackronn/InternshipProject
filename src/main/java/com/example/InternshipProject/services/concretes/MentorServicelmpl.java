@@ -6,6 +6,8 @@ import com.example.InternshipProject.services.abstracts.MentorService;
 import com.example.InternshipProject.services.dtos.requests.CreateMentorRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MentorServicelmpl implements MentorService {
     private final MentorRepository mentorRepository;
@@ -37,6 +39,10 @@ public class MentorServicelmpl implements MentorService {
         return mentor;
         }
         @Override
+        public List<Mentor> getAllMentors(){
+        return this.mentorRepository.findAll();
+        }
+        @Override
         public Mentor updateMentorById(int id, CreateMentorRequest request) {
         Mentor mentor = getMentorById(id);
 
@@ -49,5 +55,6 @@ public class MentorServicelmpl implements MentorService {
 
         return mentorRepository.save(mentor);
     }
+
 
 }

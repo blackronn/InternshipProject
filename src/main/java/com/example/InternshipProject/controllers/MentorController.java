@@ -7,19 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/mentors")
-@CrossOrigin
 public class MentorController {
     private final MentorService mentorService;
     @Autowired
     public MentorController (MentorService mentorService){
         this.mentorService=mentorService;
     }
-    @GetMapping("/api/greeting")
-    public String getGreeting() {
-        // This is the data you are sending to the frontend
-        return "{\"message\": \"Hello from your Java Backend!\"}";
+    @GetMapping
+    public List<Mentor> getAll() {
+        return this.mentorService.getAllMentors();
     }
     @GetMapping("/{id}")
     public Mentor getMentorById(@PathVariable int id){return mentorService.getMentorById(id);}
