@@ -50,10 +50,17 @@ public class InternController {
         Intern updatedIntern = internService.updateIntern(id, internDetails);
         return ResponseEntity.ok(updatedIntern);
     }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<InternResponse> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(internService.getByEmail(email));
     }
 
+    @GetMapping("/exists")
+    @ResponseBody
+    public ResponseEntity<Boolean> existsByEmail(@RequestParam String email) {
+        boolean exists = internService.existsByEmail(email);
+        return ResponseEntity.ok(exists);
+    }
 
 }

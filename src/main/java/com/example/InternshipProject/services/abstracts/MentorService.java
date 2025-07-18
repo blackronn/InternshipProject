@@ -11,6 +11,7 @@ public interface MentorService {
     Mentor deleteMentorById(int id);
     Mentor updateMentorById(int id, CreateMentorRequest request);
     List<Mentor> getAllMentors();
+    boolean existsByEmail(String email);
 
 
 }

@@ -85,8 +85,8 @@ public class InternServiceImpl implements InternService {
         return response;
     }
 
-
-
-
+    public boolean existsByEmail(String email) {
+        return internRepository.existsByEmail(email);
+    }
 
 }

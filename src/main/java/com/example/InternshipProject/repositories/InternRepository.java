@@ -8,7 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface InternRepository extends JpaRepository<Intern,Integer> {
+
     Optional<Intern> findByEmailIgnoreCase(String email);
 
+    boolean existsByEmail(String email);
 
 }

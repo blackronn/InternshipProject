@@ -55,6 +55,10 @@ public class MentorServicelmpl implements MentorService {
 
         return mentorRepository.save(mentor);
     }
+    @Override
+    public boolean existsByEmail(String email) {
+        return mentorRepository.existsByEmail(email);
+    }
 
 
 }
