@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface InternRepository extends JpaRepository<Intern,Integer> {
-    Optional<Intern> findByEmail(String email);
+    Optional<Intern> findByEmailIgnoreCase(String email);
+
 
 }

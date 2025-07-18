@@ -70,8 +70,9 @@ public class InternServiceImpl implements InternService {
     }
     @Override
     public InternResponse getByEmail(String email) {
-        Intern intern = internRepository.findByEmail(email)
+        Intern intern = internRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new RuntimeException("Intern not found with email: " + email));
+
 
         InternResponse response = new InternResponse();
         response.setName(intern.getName());
