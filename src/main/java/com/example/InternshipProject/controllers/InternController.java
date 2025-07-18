@@ -25,7 +25,7 @@ public class InternController {
 
     }
     @GetMapping
-    public List<Intern> getAll() {
+    public List<Intern> getAllInterns() {
         // Gelen isteği, işi yapması için service katmanına paslıyoruz.
         return this.internService.getAllInterns();
     }
