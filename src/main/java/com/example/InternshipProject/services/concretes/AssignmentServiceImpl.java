@@ -58,20 +58,16 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public AssignmentResponse update(int id, Assignment updatedAssignment) {
-        Assignment existing = assignmentRepository.findById(id).orElseThrow();
+    public AssignmentResponse update(int id, Assignment updatedAssignmentFromRequest) {
 
-        existing.setAssignmentName(updatedAssignment.getAssignmentName());
-        existing.setAssignmentDesc(updatedAssignment.getAssignmentDesc());
-        existing.setStatus(updatedAssignment.getStatus());
-        existing.setPriority(updatedAssignment.getPriority());
-        existing.setDueDate(updatedAssignment.getDueDate());
-        existing.setAssignedAt(updatedAssignment.getAssignedAt());
-        existing.setCompletedAt(updatedAssignment.getCompletedAt());
-        existing.setIntern(updatedAssignment.getIntern());
-        existing.setMentor(updatedAssignment.getMentor());
+        Assignment existingAssignmentInDb = assignmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bu ID ile görev bulunamadı: " + id));
 
-        Assignment updated = assignmentRepository.save(existing);
+        if (updatedAssignmentFromRequest.getStatus() != null) {
+            existingAssignmentInDb.setStatus(updatedAssignmentFromRequest.getStatus());
+        }
+
+        Assignment updated = assignmentRepository.save(existingAssignmentInDb);
 
         return convertToResponse(updated);
     }

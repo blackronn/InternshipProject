@@ -14,13 +14,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults()) // CORS ayarımız kalıyor, bu doğru.
-                .csrf(csrf -> csrf.disable()) // CSRF koruması kapalı kalıyor.
-
-                // 👇 YETKİLENDİRME KISMINI GEÇİCİ OLARAK DEĞİŞTİRİYORUZ
+                .cors(withDefaults())
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Bu satır, gelen isteğin adresi ne olursa olsun,
-                        // hepsine şimdilik sorgusuz sualsiz izin ver demek.
+
                         .anyRequest().permitAll()
                 );
 
