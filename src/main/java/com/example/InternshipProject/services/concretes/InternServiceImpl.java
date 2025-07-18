@@ -5,6 +5,8 @@ import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
 import org.springframework.stereotype.Service;
 import com.example.InternshipProject.entities.concretes.Intern;
 import com.example.InternshipProject.repositories.InternRepository;
+import com.example.InternshipProject.services.dtos.responses.InternResponse;
+
 
 import java.util.List;
 
@@ -66,6 +68,23 @@ public class InternServiceImpl implements InternService {
         // Repository nesnesi üzerinden findAll() metodunu çağırıyoruz.
         return this.internRepository.findAll();
     }
+    @Override
+    public InternResponse getByEmail(String email) {
+        Intern intern = internRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Intern not found with email: " + email));
+
+        InternResponse response = new InternResponse();
+        response.setName(intern.getName());
+        response.setSurname(intern.getSurname());
+        response.setEmail(intern.getEmail());
+        response.setUniversity(intern.getUniversity());
+        response.setDepartment(intern.getDepartment());
+        response.setMentorName(null); // Mentor bilgisi henüz yok, sonra düzeltilecek
+
+        return response;
+    }
+
+
 
 
 

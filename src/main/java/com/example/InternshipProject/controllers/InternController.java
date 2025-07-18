@@ -4,6 +4,7 @@ import com.example.InternshipProject.entities.concretes.Intern;
 import com.example.InternshipProject.repositories.InternRepository;
 import com.example.InternshipProject.services.abstracts.InternService;
 import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
+import com.example.InternshipProject.services.dtos.responses.InternResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,10 @@ public class InternController {
         Intern updatedIntern = internService.updateIntern(id, internDetails);
         return ResponseEntity.ok(updatedIntern);
     }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<InternResponse> getByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(internService.getByEmail(email));
+    }
+
 
 }
