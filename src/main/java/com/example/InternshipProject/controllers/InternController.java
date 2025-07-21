@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/interns")
+@CrossOrigin(origins = "http://localhost:8085")
 
 public class InternController {
 

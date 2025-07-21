@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mentors")
+@CrossOrigin(origins = "http://localhost:8085")
 public class MentorController {
     private final MentorService mentorService;
 

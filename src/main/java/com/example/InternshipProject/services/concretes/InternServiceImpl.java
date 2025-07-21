@@ -84,7 +84,7 @@ public class InternServiceImpl implements InternService {
 
         return response;
     }
-
+    @Override
     public boolean existsByEmail(String email) {
         return internRepository.existsByEmail(email);
     }
