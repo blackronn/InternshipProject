@@ -50,4 +50,5 @@ public class Assignment extends BaseEntity {
 
     @Column(name = "ASSIGNMENT_NAME")
     private String assignmentName;
+
 }
