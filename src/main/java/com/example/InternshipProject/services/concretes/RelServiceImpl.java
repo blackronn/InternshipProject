@@ -50,6 +50,10 @@ public class RelServiceImpl implements InternMentorRelService {
 
         return relations.stream().map(relation -> {
             RelResponse dto = new RelResponse();
+            dto.setRelationId(relation.getRelationId());
+            dto.setRelationId(relation.getRelationId());
+            dto.setInternId(relation.getIntern().getId());
+            dto.setMentorId(relation.getMentor().getId());
             dto.setInternName(relation.getIntern().getName());
             dto.setMentorName(relation.getMentor().getName());
             return dto;

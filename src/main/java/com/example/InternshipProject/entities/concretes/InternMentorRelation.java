@@ -20,11 +20,11 @@ public class InternMentorRelation extends BaseEntity {
     @Column(name="RELATION_ID")
     private int relationId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "INTERN_ID")  // Foreign Key
     private Intern intern;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MENTOR_ID")  // Foreign Key
     private Mentor mentor;
 }
