@@ -9,6 +9,7 @@ import com.example.InternshipProject.services.dtos.responses.InternResponse;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InternServiceImpl implements InternService {
@@ -87,6 +88,28 @@ public class InternServiceImpl implements InternService {
     @Override
     public boolean existsByEmail(String email) {
         return internRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<InternResponse> findInternsByMentorId(Integer mentorId) {
+        // 1. Adım: Repository'yi çağırarak veritabanından Intern entity'lerini al.
+        List<Intern> interns = internRepository.findInternsByMentorId(mentorId);
+
+        // 2. Adım: Gelen entity listesini DTO listesine dönüştür. (DTO Mapping)
+        // Bu, API'nızın sadece gerekli verileri dışarıya açmasını sağlar.
+        return interns.stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    // Bu yardımcı metot, bir Intern entity'sini InternResponse DTO'suna çevirir.
+    private InternResponse convertToResponse(Intern intern) {
+        InternResponse response = new InternResponse();
+        response.setId(intern.getId());
+        response.setName(intern.getName());
+        response.setSurname(intern.getSurname());
+        // ... InternResponse'da olmasını istediğiniz diğer alanlar
+        return response;
     }
 
 }

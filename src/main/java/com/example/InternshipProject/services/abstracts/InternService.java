@@ -16,6 +16,8 @@ public interface InternService {
     List<Intern> getAllInterns();
     InternResponse getByEmail(String email);
     boolean existsByEmail(String email);
+    List<InternResponse> findInternsByMentorId(Integer mentorId);
+
 
 
 

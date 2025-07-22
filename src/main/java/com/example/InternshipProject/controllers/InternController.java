@@ -62,6 +62,13 @@ public class InternController {
     public ResponseEntity<Boolean> existsByEmail(@RequestParam String email) {
         boolean exists = internService.existsByEmail(email);
         return ResponseEntity.ok(exists);
+
+    }
+
+    @GetMapping("/{mentorId}/interns")
+    public ResponseEntity<List<InternResponse>> getInternsByMentorId(@PathVariable Integer mentorId) {
+        List<InternResponse> interns = internService.findInternsByMentorId(mentorId);
+        return ResponseEntity.ok(interns);
     }
 
 }

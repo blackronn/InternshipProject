@@ -66,6 +66,7 @@ public class MentorServicelmpl implements MentorService {
         response.setName(mentor.getName());
         response.setSurname(mentor.getSurname());
         response.setEmail(mentor.getEmail());
+        response.setId(mentor.getId());
 
         return response;
     }
