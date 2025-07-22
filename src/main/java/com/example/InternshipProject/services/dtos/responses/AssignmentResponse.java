@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class AssignmentResponse {
-    private int id;
+    private Integer id;
     private String assignmentName;
     private String assignmentDesc;
     private String status;
@@ -15,6 +15,7 @@ public class AssignmentResponse {
     private LocalDate assignedAt;
     private LocalDate completedAt;
 
-    private int internId;
-    private int mentorId;
+    private Integer internId;
+    private Integer mentorId;
+    private String mentorName;
 }

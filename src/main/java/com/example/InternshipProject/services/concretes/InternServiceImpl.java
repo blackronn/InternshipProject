@@ -79,18 +79,19 @@ public class InternServiceImpl implements InternService {
     public InternResponse getByEmail(String email) {
         Intern intern = internRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new RuntimeException("Intern not found with email: " + email));
-
-        InternMentorRelation relation = relationRepository.findByIntern(intern).orElse(null);
+        List<InternMentorRelation> relations = relationRepository.findByIntern(intern);
 
         InternResponse response = new InternResponse();
         response.setName(intern.getName());
+        response.setId(intern.getId());
         response.setSurname(intern.getSurname());
         response.setEmail(intern.getEmail());
         response.setUniversity(intern.getUniversity());
         response.setDepartment(intern.getDepartment());
 
-        if (relation != null && relation.getMentor() != null) {
-            Mentor mentor = relation.getMentor();
+        if (relations != null && !relations.isEmpty()) {
+            // Listenin ilk elemanını alıyoruz (veya başka bir mantık kurabilirsiniz)
+            Mentor mentor = relations.get(0).getMentor();
             response.setMentorName(mentor.getName() + " " + mentor.getSurname());
         } else {
             response.setMentorName(null);

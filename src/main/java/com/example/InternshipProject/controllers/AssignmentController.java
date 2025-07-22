@@ -6,6 +6,7 @@ import com.example.InternshipProject.services.dtos.requests.CreateAssignmentRequ
 import com.example.InternshipProject.services.dtos.responses.AssignmentResponse;
 import com.example.InternshipProject.entities.concretes.Assignment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -54,6 +55,11 @@ public class AssignmentController {
         stats.put("Yapıldı", done);
         stats.put("Yapılmadı", notDone);
         return stats;
+    }
+    @GetMapping("{internId}/assignments")
+    public ResponseEntity<List<AssignmentResponse>> getAssignmentsByInternId(@PathVariable Integer internId){
+        List<AssignmentResponse> assignments=assignmentService.findAssignmentsByInternId(internId);
+        return ResponseEntity.ok(assignments);
     }
 }
 

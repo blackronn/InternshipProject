@@ -17,5 +17,7 @@ public interface AssignmentService {
     void delete(int id);
 
     AssignmentResponse update(int id, Assignment updatedAssignment);
+
+    List<AssignmentResponse> findAssignmentsByInternId(Integer internId);
 }
 
