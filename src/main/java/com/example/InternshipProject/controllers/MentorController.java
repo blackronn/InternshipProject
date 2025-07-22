@@ -3,6 +3,7 @@ package com.example.InternshipProject.controllers;
 import com.example.InternshipProject.entities.concretes.Mentor;
 import com.example.InternshipProject.services.abstracts.MentorService;
 import com.example.InternshipProject.services.dtos.requests.CreateMentorRequest;
+import com.example.InternshipProject.services.dtos.responses.MentorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,11 @@ public class MentorController {
     @GetMapping
     public List<Mentor> getAllMentors() {
         return this.mentorService.getAllMentors();
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<MentorResponse> getMentorByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(mentorService.getMentorByEmail(email));
     }
 
     @GetMapping("/{id}")

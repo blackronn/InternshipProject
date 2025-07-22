@@ -4,6 +4,7 @@ import com.example.InternshipProject.entities.concretes.Mentor;
 import com.example.InternshipProject.repositories.MentorRepository;
 import com.example.InternshipProject.services.abstracts.MentorService;
 import com.example.InternshipProject.services.dtos.requests.CreateMentorRequest;
+import com.example.InternshipProject.services.dtos.responses.MentorResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +56,20 @@ public class MentorServicelmpl implements MentorService {
 
         return mentorRepository.save(mentor);
     }
+    @Override
+    public MentorResponse getMentorByEmail(String email) {
+        Mentor mentor = mentorRepository.findMentorByEmailIgnoreCase(email)
+                .orElseThrow(() -> new RuntimeException("Mentor not found with email: " + email));
+
+
+        MentorResponse response = new MentorResponse();
+        response.setName(mentor.getName());
+        response.setSurname(mentor.getSurname());
+        response.setEmail(mentor.getEmail());
+
+        return response;
+    }
+
     @Override
     public boolean existsByEmail(String email) {
         return mentorRepository.existsByEmail(email);

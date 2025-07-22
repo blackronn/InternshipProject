@@ -11,5 +11,4 @@ public class MentorResponse {
     private String name;
     private String surname;
     private String email;
-    private String department;
 }
