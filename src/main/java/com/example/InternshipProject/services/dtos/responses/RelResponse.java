@@ -5,6 +5,8 @@ import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,13 +17,26 @@ public class RelResponse {
     @JsonProperty("intern_name")
     private String internName;
 
+    @JsonProperty("relation_id")
+    private Integer relationId;
+
     @JsonProperty("mentor_id")
-    private int mentorId;
+    private Integer mentorId;
 
     @JsonProperty("intern_id")
-    private int internId;
+    private Integer internId;
 
-    @JsonProperty("relation_id")
-    private int relationId;
+    @JsonProperty("is_active")
+    private Integer isActive;
+
+    @JsonProperty("start_date")
+    private String startDate;
+
+    @JsonProperty("end_date")
+    private String endDate;
+
+    @JsonProperty("created_at")
+    private LocalDateTime createdAt;
+
 
 }

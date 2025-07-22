@@ -31,10 +31,13 @@ public class RelationController {
         return relService.getAllRelations();
     }
 
-    @PutMapping
-    public void updateRelation(@RequestBody UpdateRelRequest request) {
+    @PutMapping("/{id}")
+    public void updateRelation(@PathVariable Integer id, @RequestBody UpdateRelRequest request) {
+        request.setRelationId(id);
         relService.updateRelation(request);
     }
+
+
 
     @DeleteMapping("/{id}")
     public void deleteRelation(@PathVariable int id) {

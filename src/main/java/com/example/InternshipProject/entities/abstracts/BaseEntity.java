@@ -27,7 +27,7 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt;
 
     @Column(name = "is_active")
-    private Boolean isActive;
+    private int isActive;
 
     @Column(name = "created_by")
     private String createdBy;

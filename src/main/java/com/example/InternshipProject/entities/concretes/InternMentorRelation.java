@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name="INTERN_MENTOR_REL")
 @Getter
@@ -20,11 +22,19 @@ public class InternMentorRelation extends BaseEntity {
     @Column(name="RELATION_ID")
     private int relationId;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "INTERN_ID")  // Foreign Key
     private Intern intern;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MENTOR_ID")  // Foreign Key
     private Mentor mentor;
+
+    @Column(name="REL_START_DATE")
+    private LocalDate relationStartDate;
+
+    @Column(name="REL_END_DATE")
+    private LocalDate relationEndDate;
+
+
 }

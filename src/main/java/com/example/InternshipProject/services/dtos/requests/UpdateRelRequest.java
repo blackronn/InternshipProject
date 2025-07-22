@@ -12,4 +12,5 @@ public class UpdateRelRequest {
     private int relationId;
     private int internId;
     private int mentorId;
+    private int isActive;
 }

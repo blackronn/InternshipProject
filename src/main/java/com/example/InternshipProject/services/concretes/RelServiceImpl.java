@@ -38,8 +38,11 @@ public class RelServiceImpl implements InternMentorRelService {
                 .orElseThrow(()-> new RuntimeException("Mentor Not Found"));
 
         InternMentorRelation relation = new InternMentorRelation();
+        relation.setIsActive(1);
         relation.setIntern(intern);
         relation.setMentor(mentor);
+        relation.setRelationStartDate(relation.getRelationStartDate());
+        relation.setRelationEndDate(relation.getRelationEndDate());
 
         relRepository.save(relation);
     }
@@ -56,6 +59,8 @@ public class RelServiceImpl implements InternMentorRelService {
             dto.setMentorId(relation.getMentor().getId());
             dto.setInternName(relation.getIntern().getName());
             dto.setMentorName(relation.getMentor().getName());
+            dto.setCreatedAt(relation.getCreatedAt());
+            dto.setIsActive(relation.getIsActive());
             return dto;
         }).toList();
     }
@@ -64,20 +69,21 @@ public class RelServiceImpl implements InternMentorRelService {
 
     @Override
     public void updateRelation(UpdateRelRequest request) {
+        Intern intern = internRepository.findById(request.getInternId())
+                .orElseThrow(() -> new RuntimeException("Intern not found"));
+        Mentor mentor = mentorRepository.findById(request.getMentorId())
+                .orElseThrow(() -> new RuntimeException("Mentor not found"));
         InternMentorRelation relation = relRepository.findById(request.getRelationId())
                 .orElseThrow(() -> new RuntimeException("Relation not found"));
 
-        Intern intern = internRepository.findById(request.getInternId())
-                .orElseThrow(() -> new RuntimeException("Intern not found"));
-
-        Mentor mentor = mentorRepository.findById(request.getMentorId())
-                .orElseThrow(() -> new RuntimeException("Mentor not found"));
-
+        relation.setIsActive(request.getIsActive());  // <-- DİKKAT!
         relation.setIntern(intern);
         relation.setMentor(mentor);
+        // (varsa diğer alanlar...)
 
         relRepository.save(relation);
     }
+
 
     @Override
     public void deleteRelation(int id) {
