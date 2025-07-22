@@ -1,5 +1,8 @@
 package com.example.InternshipProject.services.concretes;
 
+import com.example.InternshipProject.entities.concretes.InternMentorRelation;
+import com.example.InternshipProject.entities.concretes.Mentor;
+import com.example.InternshipProject.repositories.InternMentorRelRepository;
 import com.example.InternshipProject.services.abstracts.InternService;
 import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
 import org.springframework.stereotype.Service;
@@ -15,10 +18,13 @@ import java.util.stream.Collectors;
 public class InternServiceImpl implements InternService {
 
     private final InternRepository internRepository;
+    private final InternMentorRelRepository relationRepository;
 
-    public InternServiceImpl(InternRepository internRepository) {
+    public InternServiceImpl(InternRepository internRepository, InternMentorRelRepository relationRepository) {
         this.internRepository = internRepository;
+        this.relationRepository = relationRepository;
     }
+
 
     @Override
     public Intern getInternByID(int id) {
@@ -74,6 +80,7 @@ public class InternServiceImpl implements InternService {
         Intern intern = internRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new RuntimeException("Intern not found with email: " + email));
 
+        InternMentorRelation relation = relationRepository.findByIntern(intern).orElse(null);
 
         InternResponse response = new InternResponse();
         response.setName(intern.getName());
@@ -81,7 +88,13 @@ public class InternServiceImpl implements InternService {
         response.setEmail(intern.getEmail());
         response.setUniversity(intern.getUniversity());
         response.setDepartment(intern.getDepartment());
-        response.setMentorName(null); // Mentor bilgisi henüz yok, sonra düzeltilecek
+
+        if (relation != null && relation.getMentor() != null) {
+            Mentor mentor = relation.getMentor();
+            response.setMentorName(mentor.getName() + " " + mentor.getSurname());
+        } else {
+            response.setMentorName(null);
+        }
 
         return response;
     }
