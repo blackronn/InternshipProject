@@ -12,6 +12,7 @@ import com.example.InternshipProject.services.dtos.responses.InternResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,19 +62,46 @@ public class AssignmentServiceImpl implements AssignmentService {
         return convertToResponse(assignment);
     }
 
+    // AssignmentServiceImpl.java içinde
+
     @Override
     public AssignmentResponse update(int id, Assignment updatedAssignmentFromRequest) {
-
-        Assignment existingAssignmentInDb = assignmentRepository.findById(id)
+        // 1. Veritabanından güncellenecek olan mevcut görevi bul
+        Assignment assignmentInDb = assignmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bu ID ile görev bulunamadı: " + id));
 
+        // 2. Gelen isteğin status'u null değilse devam et
         if (updatedAssignmentFromRequest.getStatus() != null) {
-            existingAssignmentInDb.setStatus(updatedAssignmentFromRequest.getStatus());
+            String oldStatus = assignmentInDb.getStatus();
+            String newStatus = updatedAssignmentFromRequest.getStatus();
+
+            // 3. Statü gerçekten değişti mi diye kontrol et
+            if (!newStatus.equals(oldStatus)) {
+                // Statüyü yeni değeriyle güncelle
+                assignmentInDb.setStatus(newStatus);
+
+                // 4. YENİ EKLENEN MANTIK: Statüye göre tarihleri ayarla
+                if ("In Progress".equals(newStatus)) {
+                    // Eğer başlangıç tarihi henüz atanmamışsa, bugünün tarihi olarak ata
+                    if (assignmentInDb.getAssignedAt() == null) {
+                        assignmentInDb.setAssignedAt(LocalDate.now()); // Başlangıç tarihini bugünün tarihi yap
+                    }
+                } else if ("Completed".equals(newStatus)) {
+                    // Eğer başlangıç tarihi boşsa, onu da doldur (örn: direkt Pending'den Completed'a çekilirse)
+                    if (assignmentInDb.getAssignedAt() == null) {
+                        assignmentInDb.setAssignedAt(LocalDate.now());
+                    }
+                    assignmentInDb.setCompletedAt(LocalDate.now()); // Bitiş tarihini bugünün tarihi yap
+                }
+            }
         }
 
-        Assignment updated = assignmentRepository.save(existingAssignmentInDb);
+        // 5. Değişiklikleri veritabanına kaydet
+        Assignment savedAssignment = assignmentRepository.save(assignmentInDb);
 
-        return convertToResponse(updated);
+        // 6. Sonucu DTO'ya çevirip döndür
+        // Not: DTO'ya çeviren yardımcı metodunuzun adı farklı olabilir
+        return convertToAssignmentResponse(savedAssignment);
     }
 
     @Override
