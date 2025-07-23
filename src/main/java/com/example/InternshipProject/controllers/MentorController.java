@@ -55,7 +55,6 @@ public class MentorController {
         return ResponseEntity.ok(updatedMentor);
     }
 
-
     @GetMapping("/exists")
     public ResponseEntity<Boolean> existsByEmail(@RequestParam String email) {
         boolean exists = mentorService.existsByEmail(email);

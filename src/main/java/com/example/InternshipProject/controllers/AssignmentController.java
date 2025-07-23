@@ -61,5 +61,10 @@ public class AssignmentController {
         List<AssignmentResponse> assignments=assignmentService.findAssignmentsByInternId(internId);
         return ResponseEntity.ok(assignments);
     }
+    @GetMapping("/by-mentor/{mentorId}")
+    public ResponseEntity<List<AssignmentResponse>> getAssignmentsForMentorInterns(@PathVariable Integer mentorId) {
+        List<AssignmentResponse> assignments = assignmentService.findAssignmentsByMentorId(mentorId);
+        return ResponseEntity.ok(assignments);
+    }
 }
 

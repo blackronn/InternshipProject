@@ -19,5 +19,7 @@ public interface AssignmentService {
     AssignmentResponse update(int id, Assignment updatedAssignment);
 
     List<AssignmentResponse> findAssignmentsByInternId(Integer internId);
+
+    List<AssignmentResponse> findAssignmentsByMentorId(Integer mentorId);
 }
 

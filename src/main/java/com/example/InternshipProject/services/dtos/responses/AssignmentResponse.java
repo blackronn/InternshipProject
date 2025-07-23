@@ -18,4 +18,5 @@ public class AssignmentResponse {
     private Integer internId;
     private Integer mentorId;
     private String mentorName;
+    private String internName;
 }

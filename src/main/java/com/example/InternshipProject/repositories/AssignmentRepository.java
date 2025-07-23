@@ -15,4 +15,8 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Integer>
     @Query("SELECT ta FROM Assignment ta WHERE ta.intern.id= :internId")
     List<Assignment> findAssignmentsByInternId(@Param("internId") Integer internId);
 
+    @Query("SELECT a FROM Assignment a WHERE a.intern.id IN " +
+            "(SELECT imr.intern.id FROM InternMentorRelation imr WHERE imr.mentor.id = :mentorId)")
+    List<Assignment> findAssignmentsByMentorId(@Param("mentorId") Integer mentorId);
+
 }

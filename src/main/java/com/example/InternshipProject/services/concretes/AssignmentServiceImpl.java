@@ -110,6 +110,14 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         return responseList;
     }
+    @Override
+    public List<AssignmentResponse> findAssignmentsByMentorId(Integer mentorId) {
+        List<Assignment> assignments = assignmentRepository.findAssignmentsByMentorId(mentorId);
+
+        return assignments.stream()
+                .map(this::convertToAssignmentResponse) // Mevcut dönüşüm metodumuzu kullanıyoruz
+                .collect(Collectors.toList());
+    }
 
     // Bu yardımcı metodu da sınıfınıza eklemeniz gerekebilir.
 // Bu metot, tek bir Assignment entity'sini AssignmentResponse DTO'suna çevirir.
@@ -130,7 +138,14 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         // İlişkili nesnelerin sadece ID'lerini eklemek genellikle yeterlidir.
         if (assignment.getIntern() != null) {
-            response.setInternId(assignment.getIntern().getId());
+            // Stajyer nesnesini okunabilirlik için bir değişkene alıyoruz
+            Intern intern = assignment.getIntern();
+
+            // ID'yi set ediyoruz
+            response.setInternId(intern.getId());
+
+            // Adını ve soyadını birleştirip yeni 'internName' alanına set ediyoruz
+            response.setInternName(intern.getName() + " " + intern.getSurname());
         }
         if (assignment.getMentor() != null) {
             Mentor mentor = assignment.getMentor(); // Mentor nesnesinin tamamını al
