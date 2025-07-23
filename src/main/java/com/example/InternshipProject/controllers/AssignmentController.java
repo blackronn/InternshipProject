@@ -47,15 +47,30 @@ public class AssignmentController {
     }
 
     @GetMapping("/stats")
-    public Map<String, Long> getAssignmentStats() {
-        long done = assignmentRepository.countByStatusIgnoreCase("completed");
-        long notDone = assignmentRepository.countByStatusNotIgnoreCase("completed");
+    public Map<String, Map<String, Long>> getAssignmentStats() {
+        List<Assignment> assignments = assignmentRepository.findAll();
 
-        Map<String, Long> stats = new HashMap<>();
-        stats.put("Yapıldı", done);
-        stats.put("Yapılmadı", notDone);
-        return stats;
+        Map<String, Map<String, Long>> result = new HashMap<>();
+
+        for (Assignment assignment : assignments) {
+            if (assignment == null) continue;
+
+            if (assignment.getIntern() == null || assignment.getStatus() == null) {
+                continue;
+            }
+
+            String email = assignment.getIntern().getEmail();
+            String status = assignment.getStatus().equalsIgnoreCase("completed") ? "Yapıldı" : "Yapılmadı";
+
+            result.putIfAbsent(email, new HashMap<>());
+            Map<String, Long> userStats = result.get(email);
+            userStats.put(status, userStats.getOrDefault(status, 0L) + 1);
+        }
+
+        return result;
     }
+
+
     @GetMapping("{internId}/assignments")
     public ResponseEntity<List<AssignmentResponse>> getAssignmentsByInternId(@PathVariable Integer internId){
         List<AssignmentResponse> assignments=assignmentService.findAssignmentsByInternId(internId);
