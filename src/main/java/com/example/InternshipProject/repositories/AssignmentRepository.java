@@ -1,5 +1,6 @@
 package com.example.InternshipProject.repositories;
 import com.example.InternshipProject.entities.concretes.Assignment;
+import com.example.InternshipProject.entities.concretes.Intern;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,8 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Integer>
     @Query("SELECT a FROM Assignment a WHERE a.intern.id IN " +
             "(SELECT imr.intern.id FROM InternMentorRelation imr WHERE imr.mentor.id = :mentorId)")
     List<Assignment> findAssignmentsByMentorId(@Param("mentorId") Integer mentorId);
+
+    List<Assignment> findByIntern(Intern intern);
+
 
 }

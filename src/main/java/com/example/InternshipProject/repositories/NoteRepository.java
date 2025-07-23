@@ -1,6 +1,5 @@
 package com.example.InternshipProject.repositories;
 import com.example.InternshipProject.entities.concretes.Note;
-import com.example.InternshipProject.entities.concretes.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

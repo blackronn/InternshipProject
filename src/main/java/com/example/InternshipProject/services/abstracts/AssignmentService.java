@@ -21,5 +21,8 @@ public interface AssignmentService {
     List<AssignmentResponse> findAssignmentsByInternId(Integer internId);
 
     List<AssignmentResponse> findAssignmentsByMentorId(Integer mentorId);
+
+    List<AssignmentResponse> getAssignmentsByInternEmail(String email);
+
 }
 

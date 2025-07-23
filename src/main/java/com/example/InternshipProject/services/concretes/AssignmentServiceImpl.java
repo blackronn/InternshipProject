@@ -4,6 +4,7 @@ import com.example.InternshipProject.entities.concretes.Assignment;
 import com.example.InternshipProject.entities.concretes.Intern;
 import com.example.InternshipProject.entities.concretes.Mentor;
 import com.example.InternshipProject.repositories.AssignmentRepository;
+import com.example.InternshipProject.repositories.InternRepository;
 import com.example.InternshipProject.services.abstracts.AssignmentService;
 import com.example.InternshipProject.services.dtos.requests.CreateAssignmentRequest;
 import com.example.InternshipProject.services.dtos.responses.AssignmentResponse;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 public class AssignmentServiceImpl implements AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
+    private final InternRepository internRepository;
 
     @Override
     public AssignmentResponse add(CreateAssignmentRequest request) {
@@ -155,4 +157,39 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         return response;
     }
+    @Override
+    public List<AssignmentResponse> getAssignmentsByInternEmail(String email) {
+        Intern intern = internRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new RuntimeException("Intern not found"));
+
+        List<Assignment> assignments = assignmentRepository.findByIntern(intern);
+
+        return assignments.stream()
+                .map(assignment -> {
+                    AssignmentResponse response = new AssignmentResponse();
+                    response.setId(assignment.getId());
+                    response.setAssignmentName(assignment.getAssignmentName());
+                    response.setAssignmentDesc(assignment.getAssignmentDesc());
+                    response.setStatus(assignment.getStatus());
+                    response.setPriority(assignment.getPriority());
+                    response.setDueDate(assignment.getDueDate());
+                    response.setAssignedAt(assignment.getAssignedAt());
+                    response.setCompletedAt(assignment.getCompletedAt());
+                    response.setInternId(intern.getId());
+                    response.setInternName(intern.getName() + " " + intern.getSurname());
+
+                    if (assignment.getMentor() != null) {
+                        response.setMentorId(assignment.getMentor().getId());
+                        response.setMentorName(
+                                assignment.getMentor().getName() + " " + assignment.getMentor().getSurname()
+                        );
+                    }
+
+                    return response;
+                })
+                .toList();
+    }
+
+
+
 }

@@ -7,6 +7,8 @@ import com.example.InternshipProject.services.dtos.responses.AssignmentResponse;
 import com.example.InternshipProject.entities.concretes.Assignment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -81,5 +83,10 @@ public class AssignmentController {
         List<AssignmentResponse> assignments = assignmentService.findAssignmentsByMentorId(mentorId);
         return ResponseEntity.ok(assignments);
     }
+    @GetMapping("/intern")
+    public List<AssignmentResponse> getAssignmentsByEmail(@RequestParam String email) {
+        return assignmentService.getAssignmentsByInternEmail(email);
+    }
+
 }
 
