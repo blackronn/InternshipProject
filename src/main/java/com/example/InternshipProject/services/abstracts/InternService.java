@@ -14,7 +14,7 @@ public interface InternService {
     Intern deleteInternByID(int id);
     Intern updateIntern(int id, Intern internDetails);
     List<Intern> getAllInterns();
-    InternResponse getByEmail(String email);
+    InternResponse getByEmailAndSyncOffice(String email, String officeLocation);
     boolean existsByEmail(String email);
     List<InternResponse> findInternsByMentorId(Integer mentorId);
 

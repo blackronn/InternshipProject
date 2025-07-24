@@ -2,9 +2,12 @@ package com.example.InternshipProject.services.concretes;
 
 import com.example.InternshipProject.entities.concretes.InternMentorRelation;
 import com.example.InternshipProject.entities.concretes.Mentor;
+import com.example.InternshipProject.entities.concretes.Office;
 import com.example.InternshipProject.repositories.InternMentorRelRepository;
+import com.example.InternshipProject.repositories.OfficeRepository;
 import com.example.InternshipProject.services.abstracts.InternService;
 import com.example.InternshipProject.services.dtos.requests.CreateInternRequest;
+import com.example.InternshipProject.services.dtos.responses.OfficeResponse;
 import org.springframework.stereotype.Service;
 import com.example.InternshipProject.entities.concretes.Intern;
 import com.example.InternshipProject.repositories.InternRepository;
@@ -19,10 +22,12 @@ public class InternServiceImpl implements InternService {
 
     private final InternRepository internRepository;
     private final InternMentorRelRepository relationRepository;
+    private final OfficeRepository officeRepository;
 
-    public InternServiceImpl(InternRepository internRepository, InternMentorRelRepository relationRepository) {
+    public InternServiceImpl(InternRepository internRepository, InternMentorRelRepository relationRepository,OfficeRepository officeRepository) {
         this.internRepository = internRepository;
         this.relationRepository = relationRepository;
+        this.officeRepository = officeRepository;
     }
 
 
@@ -78,28 +83,21 @@ public class InternServiceImpl implements InternService {
         return this.internRepository.findAll();
     }
     @Override
-    public InternResponse getByEmail(String email) {
+    public InternResponse getByEmailAndSyncOffice(String email, String officeLocation) {
         Intern intern = internRepository.findByEmailIgnoreCase(email)
-                .orElseThrow(() -> new RuntimeException("Intern not found with email: " + email));
-        List<InternMentorRelation> relations = relationRepository.findByIntern(intern);
+                .orElseThrow(() -> new RuntimeException("Stajyer bulunamadı: " + email));
 
-        InternResponse response = new InternResponse();
-        response.setName(intern.getName());
-        response.setId(intern.getId());
-        response.setSurname(intern.getSurname());
-        response.setEmail(intern.getEmail());
-        response.setUniversity(intern.getUniversity());
-        response.setDepartment(intern.getDepartment());
+        // Eğer stajyerin ofisi atanmamışsa VE dışarıdan bir officeLocation geldiyse atama yap
+        if (intern.getOffice() == null && officeLocation != null && !officeLocation.isEmpty()) {
+            Office officeToAssign = officeRepository.findByName(officeLocation)
+                    .orElseThrow(() -> new RuntimeException("Veritabanında ofis bulunamadı: " + officeLocation));
 
-        if (relations != null && !relations.isEmpty()) {
-            // Listenin ilk elemanını alıyoruz (veya başka bir mantık kurabilirsiniz)
-            Mentor mentor = relations.get(0).getMentor();
-            response.setMentorName(mentor.getName() + " " + mentor.getSurname());
-        } else {
-            response.setMentorName(null);
+            intern.setOffice(officeToAssign);
+            internRepository.save(intern);
         }
 
-        return response;
+        // DTO dönüşümünü merkezi yardımcı metoda devrediyoruz
+        return convertToResponse(intern);
     }
     @Override
     public boolean existsByEmail(String email) {
@@ -124,8 +122,23 @@ public class InternServiceImpl implements InternService {
         response.setId(intern.getId());
         response.setName(intern.getName());
         response.setSurname(intern.getSurname());
-        // ... InternResponse'da olmasını istediğiniz diğer alanlar
+        response.setEmail(intern.getEmail());
+        // ... InternResponse'da olmasını istediğiniz diğer alanlar ...
+
+        if (intern.getOffice() != null) {
+            OfficeResponse officeDto = new OfficeResponse();
+            officeDto.setId(intern.getOffice().getId());
+            officeDto.setName(intern.getOffice().getName());
+            response.setOffice(officeDto);
+        }
+
+        // Mentor bilgisini de bu merkezi metoda taşıyoruz
+        List<InternMentorRelation> relations = relationRepository.findByIntern(intern);
+        if (relations != null && !relations.isEmpty()) {
+            Mentor mentor = relations.get(0).getMentor();
+            response.setMentorName(mentor.getName() + " " + mentor.getSurname());
+        }
+
         return response;
     }
-
 }

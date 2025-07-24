@@ -52,11 +52,6 @@ public class InternController {
         return ResponseEntity.ok(updatedIntern);
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<InternResponse> getByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(internService.getByEmail(email));
-    }
-
     @GetMapping("/exists")
     @ResponseBody
     public ResponseEntity<Boolean> existsByEmail(@RequestParam String email) {
@@ -69,6 +64,12 @@ public class InternController {
     public ResponseEntity<List<InternResponse>> getInternsByMentorId(@PathVariable Integer mentorId) {
         List<InternResponse> interns = internService.findInternsByMentorId(mentorId);
         return ResponseEntity.ok(interns);
+    }
+    @GetMapping("/by-email") // YENİ HALİ
+    public ResponseEntity<InternResponse> getByEmailAndSyncOffice(
+            @RequestParam String email,
+            @RequestParam(required = false) String officeLocation) { // officeLocation'ı da alıyoruz
+        return ResponseEntity.ok(internService.getByEmailAndSyncOffice(email, officeLocation));
     }
 
 }
