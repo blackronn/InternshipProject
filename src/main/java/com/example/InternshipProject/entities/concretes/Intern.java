@@ -35,10 +35,10 @@ public class Intern extends BaseEntity {
     @Column(name="PASSWORD")
     private String password;
 
-    @Column(name="START_DATE")
+    @Column(name="start_date")
     private LocalDate startDate;
 
-    @Column(name="END_DATE")
+    @Column(name="end_date")
     private LocalDate endDate;
 
     @Column(name="UNIVERSITY")
