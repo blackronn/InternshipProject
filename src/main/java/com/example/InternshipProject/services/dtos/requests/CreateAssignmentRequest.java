@@ -15,4 +15,5 @@ public class CreateAssignmentRequest {
     private LocalDate completedAt;
     private int internId;
     private int mentorId;
+    private LocalDate startedAt;
 }

@@ -35,6 +35,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         assignment.setDueDate(request.getDueDate());
         assignment.setAssignedAt(request.getAssignedAt());
         assignment.setCompletedAt(request.getCompletedAt());
+        assignment.setStartedAt(request.getStartedAt());
 
         Intern intern = new Intern();
         intern.setId(request.getInternId());
@@ -83,8 +84,8 @@ public class AssignmentServiceImpl implements AssignmentService {
                 // 4. YENİ EKLENEN MANTIK: Statüye göre tarihleri ayarla
                 if ("In Progress".equals(newStatus)) {
                     // Eğer başlangıç tarihi henüz atanmamışsa, bugünün tarihi olarak ata
-                    if (assignmentInDb.getAssignedAt() == null) {
-                        assignmentInDb.setAssignedAt(LocalDate.now()); // Başlangıç tarihini bugünün tarihi yap
+                    if (assignmentInDb.getStartedAt() == null) {
+                        assignmentInDb.setStartedAt(LocalDate.now()); // Başlangıç tarihini bugünün tarihi yap
                     }
                 } else if ("Completed".equals(newStatus)) {
                     // Eğer başlangıç tarihi boşsa, onu da doldur (örn: direkt Pending'den Completed'a çekilirse)
@@ -122,6 +123,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         response.setCompletedAt(assignment.getCompletedAt());
         response.setInternId(assignment.getIntern().getId());
         response.setMentorId(assignment.getMentor().getId());
+        response.setStartedAt(assignment.getStartedAt());
 
         return response;
     }
@@ -164,6 +166,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         response.setAssignedAt(assignment.getAssignedAt());
         response.setCompletedAt(assignment.getCompletedAt());
         response.setStatus(assignment.getStatus());
+        response.setStartedAt(assignment.getStartedAt());
         // ... AssignmentResponse DTO'nuzda olan diğer tüm alanları burada set edin ...
 
         // İlişkili nesnelerin sadece ID'lerini eklemek genellikle yeterlidir.
@@ -203,6 +206,8 @@ public class AssignmentServiceImpl implements AssignmentService {
                     response.setDueDate(assignment.getDueDate());
                     response.setAssignedAt(assignment.getAssignedAt());
                     response.setCompletedAt(assignment.getCompletedAt());
+                    response.setStartedAt(assignment.getStartedAt());
+
                     response.setInternId(intern.getId());
                     response.setInternName(intern.getName() + " " + intern.getSurname());
 

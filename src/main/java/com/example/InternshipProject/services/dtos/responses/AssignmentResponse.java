@@ -14,6 +14,7 @@ public class AssignmentResponse {
     private LocalDate dueDate;
     private LocalDate assignedAt;
     private LocalDate completedAt;
+    private LocalDate startedAt;
 
     private Integer internId;
     private Integer mentorId;
