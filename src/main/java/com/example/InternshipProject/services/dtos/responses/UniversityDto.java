@@ -3,6 +3,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 @Data
 public class UniversityDto {
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("ID")
+    private int id;
+
+    @JsonProperty("UNIVERSITY_NAME")
+    private String universityName;
 }
