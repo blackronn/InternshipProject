@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api") 
+@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:8085")  // Vue port’un
 @RequiredArgsConstructor
 public class UniversityController {

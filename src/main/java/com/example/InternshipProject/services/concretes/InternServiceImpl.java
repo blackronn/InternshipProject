@@ -44,6 +44,8 @@ public class InternServiceImpl implements InternService {
         intern.setUniversity(request.getUniversity());
         intern.setDepartment(request.getDepartment());
 
+        intern.setIsActive(1);
+
         internRepository.save(intern);
     }
 
