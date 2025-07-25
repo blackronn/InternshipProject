@@ -123,6 +123,8 @@ public class InternServiceImpl implements InternService {
         response.setName(intern.getName());
         response.setSurname(intern.getSurname());
         response.setEmail(intern.getEmail());
+        response.setUniversity(intern.getUniversity());
+        response.setDepartment(intern.getDepartment());
         // ... InternResponse'da olmasını istediğiniz diğer alanlar ...
 
         if (intern.getOffice() != null) {
