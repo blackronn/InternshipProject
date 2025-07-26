@@ -17,7 +17,7 @@ public class Office {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(name = "name" ,nullable = false)
     private String name; // Örn: "İzmir", "Ankara"
 
     @Column(name = "address", length = 512)
@@ -28,6 +28,9 @@ public class Office {
 
     @Column(name = "transport_details", length = 1024)
     private String transportDetails;
+
+    @Column(name = "district")
+    private String district;
 
     // Bir ofisin birden fazla stajyeri olabileceğini belirten ilişki
     // mappedBy = "office", Intern entity'sindeki alan adıyla aynı olmalı

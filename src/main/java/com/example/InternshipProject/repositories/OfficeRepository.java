@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface OfficeRepository extends JpaRepository<Office, Integer> {
     // Ofis adıyla arama yapacak metot
     Optional<Office> findByName(String name);
+    Optional<Office> findByAddress(String address);
+    Optional<Office> findByDistrictIgnoreCase(String district);
 }

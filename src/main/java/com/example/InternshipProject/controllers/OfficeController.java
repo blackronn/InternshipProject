@@ -26,6 +26,20 @@ public class OfficeController {
     public ResponseEntity<OfficeResponse> update(@PathVariable int id, @RequestBody UpdateOfficeRequest request) {
         return ResponseEntity.ok(officeService.update(id, request));
     }
+    @GetMapping("/by-address")
+    public ResponseEntity<OfficeResponse> getByAddress(@RequestParam String address) {
+        // Call the service method
+        OfficeResponse response = officeService.getOfficeByAddress(address);
+
+        // Check if the service returned null
+        if (response == null) {
+            // If null, the office was not found, so return HTTP 404
+            return ResponseEntity.notFound().build();
+        }
+
+        // If not null, return HTTP 200 OK with the response body
+        return ResponseEntity.ok(response);
+    }
 
     // İsterseniz ofis eklemek için de bir endpoint ekleyebilirsiniz
     // @PostMapping

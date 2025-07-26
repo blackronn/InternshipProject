@@ -1,4 +1,3 @@
-// src/main/java/com/example/InternshipProject/services/concretes/OfficeServiceImpl.java
 package com.example.InternshipProject.services.concretes;
 
 import com.example.InternshipProject.entities.concretes.Office;
@@ -8,6 +7,7 @@ import com.example.InternshipProject.services.dtos.requests.CreateOfficeRequest;
 import com.example.InternshipProject.services.dtos.requests.UpdateOfficeRequest;
 import com.example.InternshipProject.services.dtos.responses.OfficeResponse;
 import org.springframework.stereotype.Service;
+import java.util.Optional; // Make sure this import is present
 
 @Service
 public class OfficeServiceImpl implements OfficeService {
@@ -20,9 +20,42 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public OfficeResponse getOfficeByName(String name) {
+        // Assuming findByName returns Optional<Office>
         Office office = officeRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("Ofis bulunamadı: " + name));
         return convertToOfficeResponse(office);
+    }
+
+    // --- THIS IS THE UPDATED METHOD ---
+    @Override
+    public OfficeResponse getOfficeByAddress(String address) {
+        if (address == null || address.trim().isEmpty()) {
+            return null;
+        }
+
+        String locationKeyword = findLocationKeyword(address);
+        if (locationKeyword == null) {
+            return null;
+        }
+
+        Optional<Office> officeOptional = officeRepository.findByDistrictIgnoreCase(locationKeyword);
+        if (officeOptional.isEmpty()) {
+            return null;
+        }
+
+        Office office = officeOptional.get();
+        OfficeResponse response = convertToOfficeResponse(office);
+        // Overwrite the address in the response with the user's full address from Azure
+        response.setAddress(address);
+        return response;
+    }
+    private String findLocationKeyword(String address) {
+        String addressLower = address.toLowerCase();
+        if (addressLower.contains("urla")) return "Urla";
+        if (addressLower.contains("ankara")) return "Ankara";
+        if (addressLower.contains("esenler")) return "Esenler";
+        if (addressLower.contains("kadıköy")) return "Kadıköy";
+        return null;
     }
 
     @Override
@@ -34,26 +67,22 @@ public class OfficeServiceImpl implements OfficeService {
         office.setTransportDetails(request.getTransportDetails());
         officeRepository.save(office);
     }
+
     @Override
     public OfficeResponse update(int id, UpdateOfficeRequest request) {
-        // 1. ID ile mevcut ofisi veritabanında bul. Bulamazsan hata fırlat.
         Office officeInDb = officeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bu ID ile ofis bulunamadı: " + id));
 
-        // 2. Gelen isteğin içindeki yeni verileri mevcut ofis nesnesine ata.
         officeInDb.setName(request.getName());
         officeInDb.setAddress(request.getAddress());
         officeInDb.setPhoneNumber(request.getPhoneNumber());
         officeInDb.setTransportDetails(request.getTransportDetails());
 
-        // 3. Güncellenmiş nesneyi veritabanına kaydet.
         Office updatedOffice = officeRepository.save(officeInDb);
-
-        // 4. Sonucu Response DTO'suna çevirip geri döndür.
         return convertToOfficeResponse(updatedOffice);
     }
 
-    // YARDIMCI DÖNÜŞÜM METODU
+    // Your existing helper method is used
     private OfficeResponse convertToOfficeResponse(Office office) {
         OfficeResponse response = new OfficeResponse();
         response.setId(office.getId());
