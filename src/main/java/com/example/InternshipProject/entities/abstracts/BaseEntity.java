@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -26,8 +27,9 @@ public abstract class BaseEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "is_active")
-    private int isActive;
+    @Column(name = "is_active", nullable = false)
+    private int isActive = 1;
+
 
     @Column(name = "created_by")
     private String createdBy;

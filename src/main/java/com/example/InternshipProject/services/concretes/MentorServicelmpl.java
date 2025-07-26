@@ -29,6 +29,7 @@ public class MentorServicelmpl implements MentorService {
         mentor.setPhoneNumber(request.getPhoneNumber());
         mentor.setPassword(request.getPassword());
         mentor.setTitle(request.getTitle());
+        mentor.setIsActive(1);
 
         mentorRepository.save(mentor);
 

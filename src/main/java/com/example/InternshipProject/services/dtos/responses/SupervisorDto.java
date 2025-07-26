@@ -7,6 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SupervisorDto {
+    private Long id;
+    private Long internId;// supervisor PK’si
+    private Long departmentId;       // FK’si
     private String departmentName;
     private String supervisorName;
     private String supervisorEmail;
