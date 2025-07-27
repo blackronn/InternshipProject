@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface InternMentorRelRepository extends JpaRepository<InternMentorRelation,Integer> {
     List<InternMentorRelation> findByIntern(Intern intern);
+    List<InternMentorRelation> findByIntern_EmailIgnoreCase(String email);
 }

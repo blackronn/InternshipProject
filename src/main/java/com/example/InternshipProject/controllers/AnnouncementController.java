@@ -23,7 +23,8 @@ public class AnnouncementController {
     }
 
     @GetMapping("/recent")
-    public ResponseEntity<List<AnnouncementResponse>> getRecentAnnouncements() {
-        return ResponseEntity.ok(announcementService.getRecentAnnouncements());
+    public ResponseEntity<List<AnnouncementResponse>> getRecentAnnouncements(@RequestParam("email") String email) {
+        return ResponseEntity.ok(announcementService.getRecentAnnouncements(email));
     }
+
 }

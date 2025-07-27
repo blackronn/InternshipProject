@@ -11,4 +11,5 @@ public class AnnouncementResponse {
     private String title;
     private String content;
     private LocalDateTime createdAt;
+    private Long mentorId;
 }

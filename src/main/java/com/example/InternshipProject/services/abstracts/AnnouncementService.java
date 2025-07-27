@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface AnnouncementService {
     void createAnnouncement(CreateAnnouncementRequest request);
-    List<AnnouncementResponse> getRecentAnnouncements();
+    List<AnnouncementResponse> getRecentAnnouncements(String internEmail);
 }

@@ -6,4 +6,5 @@ import lombok.Data;
 public class CreateAnnouncementRequest {
     private String title;
     private String content;
+    private Long mentorId;
 }

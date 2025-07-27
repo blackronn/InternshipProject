@@ -20,4 +20,8 @@ public class Announcement {
     private String content;
 
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MENTOR_ID")
+    private Mentor mentor;
 }

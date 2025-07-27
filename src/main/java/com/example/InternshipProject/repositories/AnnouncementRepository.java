@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long> {
     List<Announcement> findByCreatedAtAfter(LocalDateTime after);
+    List<Announcement> findByMentor_IdIn(List<Long> mentorIds);
+
 }
