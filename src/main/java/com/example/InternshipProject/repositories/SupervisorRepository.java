@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SupervisorRepository extends JpaRepository<Supervisor, Long> {
-
-    // JPA, internId alanına göre sorgu oluşturacak
     List<Supervisor> findByInternId(Long internId);
-
+    Supervisor findByInternIdAndDepartment_Id(Long internId, Long departmentId);
+    void deleteByInternIdAndDepartment_Id(Long internId, Long departmentId);
+    boolean existsByInternIdAndDepartment_IdAndEmail(Long internId, Long departmentId, String email);
 }
+

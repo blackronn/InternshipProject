@@ -15,4 +15,9 @@ public interface SupervisorService {
 
     // 3) Sadece bir internId'ye ait atamaları döndür
     List<SupervisorDto> findByInternId(Long internId);
+
+    void deleteSupervisorById(Long id);
+    void addOrUpdateSupervisor(CreateSupervisorRequest request); //     id/department unique olacak
+    void deleteSupervisorByInternAndDepartment(Long internId, Long departmentId);
+
 }
