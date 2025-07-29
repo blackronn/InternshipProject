@@ -2,20 +2,24 @@ package com.example.InternshipProject.services.concretes;
 
 import com.example.InternshipProject.entities.concretes.Assignment;
 import com.example.InternshipProject.entities.concretes.Intern;
+import com.example.InternshipProject.entities.concretes.InternMentorRelation;
 import com.example.InternshipProject.entities.concretes.Mentor;
 import com.example.InternshipProject.repositories.AssignmentRepository;
+import com.example.InternshipProject.repositories.InternMentorRelRepository;
 import com.example.InternshipProject.repositories.InternRepository;
+import com.example.InternshipProject.repositories.MentorRepository;
 import com.example.InternshipProject.services.abstracts.AssignmentService;
 import com.example.InternshipProject.services.dtos.requests.CreateAssignmentRequest;
 import com.example.InternshipProject.services.dtos.responses.AssignmentResponse;
-import com.example.InternshipProject.services.dtos.responses.InternResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
     private final InternRepository internRepository;
+    private final MentorRepository mentorRepository;
+    private final InternMentorRelRepository internMentorRelRepository;
 
     @Override
     public AssignmentResponse add(CreateAssignmentRequest request) {
@@ -222,6 +228,31 @@ public class AssignmentServiceImpl implements AssignmentService {
                 })
                 .toList();
     }
+    @Override
+    public Map<String, Long> getMentorAssignmentStats(String mentorEmail) {
+        Mentor mentor = mentorRepository.findMentorByEmailIgnoreCase(mentorEmail)
+                .orElseThrow(() -> new RuntimeException("Mentor bulunamadı"));
+
+        List<InternMentorRelation> relations = internMentorRelRepository.findByMentor(mentor);
+
+        List<Assignment> allAssignments = new ArrayList<>();
+        for (InternMentorRelation rel : relations) {
+            List<Assignment> internAssignments = assignmentRepository.findByIntern(rel.getIntern());
+            allAssignments.addAll(internAssignments);
+        }
+
+        Map<String, Long> result = new HashMap<>();
+
+        for (Assignment assignment : allAssignments) {
+            if (assignment == null || assignment.getStatus() == null) continue;
+
+            String status = assignment.getStatus().equalsIgnoreCase("completed") ? "Yapıldı" : "Yapılmadı";
+            result.put(status, result.getOrDefault(status, 0L) + 1);
+        }
+
+        return result;
+    }
+
 
 
 

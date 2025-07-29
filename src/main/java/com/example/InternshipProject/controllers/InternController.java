@@ -65,6 +65,7 @@ public class InternController {
         List<InternResponse> interns = internService.findInternsByMentorId(mentorId);
         return ResponseEntity.ok(interns);
     }
+
     @GetMapping("/by-email") // YENİ HALİ
     public ResponseEntity<InternResponse> getByEmailAndSyncOffice(
             @RequestParam String email,

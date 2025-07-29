@@ -5,6 +5,7 @@ import com.example.InternshipProject.services.dtos.requests.CreateAssignmentRequ
 import com.example.InternshipProject.services.dtos.responses.AssignmentResponse;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AssignmentService {
 
@@ -23,6 +24,9 @@ public interface AssignmentService {
     List<AssignmentResponse> findAssignmentsByMentorId(Integer mentorId);
 
     List<AssignmentResponse> getAssignmentsByInternEmail(String email);
+
+    Map<String, Long> getMentorAssignmentStats(String mentorEmail);
+
 
 }
 

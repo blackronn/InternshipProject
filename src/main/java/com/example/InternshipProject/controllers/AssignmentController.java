@@ -87,6 +87,11 @@ public class AssignmentController {
     public List<AssignmentResponse> getAssignmentsByEmail(@RequestParam String email) {
         return assignmentService.getAssignmentsByInternEmail(email);
     }
+    @GetMapping("/stats/mentor")
+    public Map<String, Long> getMentorAssignmentStats(@RequestParam String email) {
+        return assignmentService.getMentorAssignmentStats(email);
+    }
+
 
 }
 
