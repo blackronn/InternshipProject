@@ -15,6 +15,7 @@ public class InternResponse {
     private String university;
     private String department;
     private String mentorName;
+    private String mentorEmail;
     private OfficeResponse office;// "Ad Soyad" format or null
 
     private String startDate;

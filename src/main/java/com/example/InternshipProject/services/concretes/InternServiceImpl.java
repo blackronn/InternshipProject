@@ -145,6 +145,7 @@ public class InternServiceImpl implements InternService {
         if (relations != null && !relations.isEmpty()) {
             Mentor mentor = relations.get(0).getMentor();
             response.setMentorName(mentor.getName() + " " + mentor.getSurname());
+            response.setMentorEmail(mentor.getEmail());
         }
 
         return response;
