@@ -50,4 +50,8 @@ public class Intern extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "office_id") // 'interns' tablosuna eklenecek foreign key kolonunun adı
     private Office office;
+
+    @Column(name = "manager_email")
+    private String managerEmail;
+
 }

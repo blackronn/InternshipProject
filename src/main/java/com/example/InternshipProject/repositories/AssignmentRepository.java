@@ -2,6 +2,7 @@ package com.example.InternshipProject.repositories;
 import com.example.InternshipProject.entities.concretes.Assignment;
 import com.example.InternshipProject.entities.concretes.Intern;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AssignmentRepository extends JpaRepository<Assignment, Integer>{
+public interface AssignmentRepository extends JpaRepository<Assignment, Long>,
+        JpaSpecificationExecutor<Assignment>
+{
     long countByStatusIgnoreCase(String status);
     long countByStatusNotIgnoreCase(String status);
 

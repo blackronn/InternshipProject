@@ -6,14 +6,21 @@ import com.example.InternshipProject.services.dtos.requests.CreateAssignmentRequ
 import com.example.InternshipProject.services.dtos.responses.AssignmentResponse;
 import com.example.InternshipProject.entities.concretes.Assignment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jakarta.persistence.criteria.Predicate;
 
 @RestController
 @RequestMapping("/api/assignments")
@@ -91,6 +98,47 @@ public class AssignmentController {
     public Map<String, Long> getMentorAssignmentStats(@RequestParam String email) {
         return assignmentService.getMentorAssignmentStats(email);
     }
+    @GetMapping("/paged")
+    public ResponseEntity<Page<AssignmentResponse>> getPagedAssignments(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "assignedAt") String sort,
+            @RequestParam(defaultValue = "desc") String direction,
+            @RequestParam(required = false) Long mentorId,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String priority
+    ) {
+        Pageable pageable = PageRequest.of(
+                page, size,
+                direction.equalsIgnoreCase("asc") ? Sort.by(sort).ascending() : Sort.by(sort).descending()
+        );
+
+        Specification<Assignment> spec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (mentorId != null) {
+                predicates.add(cb.equal(root.get("mentor").get("id"), mentorId));
+            }
+
+            if (status != null && !status.isBlank()) {
+                predicates.add(cb.equal(cb.lower(root.get("status")), status.toLowerCase()));
+            }
+
+            if (priority != null && !priority.isBlank()) {
+                predicates.add(cb.equal(cb.lower(root.get("priority")), priority.toLowerCase()));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<Assignment> assignmentPage = assignmentRepository.findAll(spec, pageable);
+        Page<AssignmentResponse> responsePage = assignmentPage.map(assignmentService::convertToAssignmentResponse);
+
+
+        return ResponseEntity.ok(responsePage);
+    }
+
+
 
 
 }

@@ -125,6 +125,7 @@ public class InternServiceImpl implements InternService {
         response.setEmail(intern.getEmail());
         response.setUniversity(intern.getUniversity());
         response.setDepartment(intern.getDepartment());
+        response.setManagerEmail(intern.getManagerEmail());
         response.setStartDate(
                 intern.getStartDate() != null ? intern.getStartDate().toString() : null
         );

@@ -28,5 +28,6 @@ public interface AssignmentService {
     Map<String, Long> getMentorAssignmentStats(String mentorEmail);
 
 
+    AssignmentResponse convertToAssignmentResponse(Assignment assignment);
 }
 

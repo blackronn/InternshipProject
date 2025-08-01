@@ -65,7 +65,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public AssignmentResponse getById(int id) {
-        Assignment assignment = assignmentRepository.findById(id).orElseThrow();
+        Assignment assignment = assignmentRepository.findById((long) id).orElseThrow();
         return convertToResponse(assignment);
     }
 
@@ -74,7 +74,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public AssignmentResponse update(int id, Assignment updatedAssignmentFromRequest) {
         // 1. Veritabanından güncellenecek olan mevcut görevi bul
-        Assignment assignmentInDb = assignmentRepository.findById(id)
+        Assignment assignmentInDb = assignmentRepository.findById((long) id)
                 .orElseThrow(() -> new RuntimeException("Bu ID ile görev bulunamadı: " + id));
 
         // 2. Gelen isteğin status'u null değilse devam et
@@ -113,7 +113,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public void delete(int id) {
-        assignmentRepository.deleteById(id);
+        assignmentRepository.deleteById((long) id);
     }
 
     private AssignmentResponse convertToResponse(Assignment assignment) {
@@ -159,7 +159,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     // Bu yardımcı metodu da sınıfınıza eklemeniz gerekebilir.
 // Bu metot, tek bir Assignment entity'sini AssignmentResponse DTO'suna çevirir.
-    private AssignmentResponse convertToAssignmentResponse(Assignment assignment) {
+    public AssignmentResponse convertToAssignmentResponse(Assignment assignment) {
         // Eğer MapStruct gibi bir kütüphane kullanmıyorsanız, bu dönüşümü elle yapmalısınız.
         AssignmentResponse response = new AssignmentResponse();
 
