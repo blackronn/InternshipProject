@@ -14,4 +14,6 @@ public interface InternMentorRelRepository extends JpaRepository<InternMentorRel
     List<InternMentorRelation> findByIntern(Intern intern);
     List<InternMentorRelation> findByIntern_EmailIgnoreCase(String email);
     List<InternMentorRelation> findByMentor(Mentor mentor);
+
+    List<InternMentorRelation> findByIntern_Id(int internId);
 }

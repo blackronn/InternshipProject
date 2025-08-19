@@ -20,25 +20,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults())
+                .cors(withDefaults()) // Burası corsConfigurationSource bean'ini kullanır
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                        .anyRequest().permitAll() // Şimdilik tüm isteklere izin veriliyor
                 );
 
         return http.build();
     }
 
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // Vue projesi
+        // İzin verilen origin'leri (kaynakları) buraya listeleyin. "*" yerine spesifik olmak daha güvenlidir.
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:8085",
+                "https://main.d1fdmlydmlt5lg.amplifyapp.com"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*")); // istersen özelleştirebilirsin
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true); // Frontend'in cookie gibi credential'lar göndermesine izin verir
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**", configuration); // Tüm yollar için bu konfigürasyonu uygula
 
         return source;
     }

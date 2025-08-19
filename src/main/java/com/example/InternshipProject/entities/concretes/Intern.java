@@ -17,7 +17,7 @@ public class Intern extends BaseEntity {
     @Id
     @Column(name="INTERN_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
 
     @Column(name="NAME")
