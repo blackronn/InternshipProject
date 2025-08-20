@@ -7,6 +7,8 @@ import com.example.InternshipProject.services.dtos.responses.OfficeResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/offices")
 @CrossOrigin(origins = "http://localhost:8085")
@@ -46,4 +48,12 @@ public class OfficeController {
     // public void add(@RequestBody CreateOfficeRequest request) {
     //     officeService.add(request);
     // }
+    @GetMapping
+    public ResponseEntity<List<OfficeResponse>> getAllOffices(){
+        return ResponseEntity.ok(officeService.getAllOffices());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<OfficeResponse> getOfficeById(@PathVariable int id) {
+        return ResponseEntity.ok(officeService.getOfficeById(id));
+    }
 }

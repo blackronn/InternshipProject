@@ -13,6 +13,7 @@ public class CreateInternRequest {
         private String phoneNumber;
         private String password;
         private LocalDate startDate;
+        private Integer officeId;
         private LocalDate endDate;
         private String university;
         private String department;
