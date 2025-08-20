@@ -7,6 +7,9 @@ import com.example.InternshipProject.services.dtos.requests.CreateOfficeRequest;
 import com.example.InternshipProject.services.dtos.requests.UpdateOfficeRequest;
 import com.example.InternshipProject.services.dtos.responses.OfficeResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional; // Make sure this import is present
 
 @Service
@@ -49,6 +52,29 @@ public class OfficeServiceImpl implements OfficeService {
         response.setAddress(address);
         return response;
     }
+
+    @Override
+    public List<OfficeResponse> getAllOffices() {
+        List<Office> offices=  officeRepository.findAll();
+        List<OfficeResponse> responses = new ArrayList<>();
+        for(Office office : offices){
+            OfficeResponse response = new OfficeResponse();
+            response.setId(office.getId());
+            response.setName(office.getName());
+            responses.add(response);
+        }
+        return responses;
+
+    }
+
+    @Override
+    public OfficeResponse getOfficeById(int id) {
+        Office office = officeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ofis bulunamadı: " + id));
+        return convertToOfficeResponse(office);
+    }
+
+
     private String findLocationKeyword(String address) {
         String addressLower = address.toLowerCase();
         if (addressLower.contains("urla")) return "Urla";

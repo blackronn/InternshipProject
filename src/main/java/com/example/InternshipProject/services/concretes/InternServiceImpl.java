@@ -48,7 +48,11 @@ public class InternServiceImpl implements InternService {
         intern.setEndDate(request.getEndDate());
         intern.setUniversity(request.getUniversity());
         intern.setDepartment(request.getDepartment());
-
+        if (request.getOfficeId() != null) {
+            Office office = officeRepository.findById(request.getOfficeId())
+                    .orElseThrow(() -> new RuntimeException("Office bulunamadı: " + request.getOfficeId()));
+            intern.setOffice(office);
+        }
         intern.setIsActive(1);
 
         internRepository.save(intern);
@@ -74,6 +78,8 @@ public class InternServiceImpl implements InternService {
         intern.setEndDate(internDetails.getEndDate());
         intern.setUniversity(internDetails.getUniversity());
         intern.setDepartment(internDetails.getDepartment());
+        intern.setOffice(internDetails.getOffice());
+
 
         return internRepository.save(intern);
     }

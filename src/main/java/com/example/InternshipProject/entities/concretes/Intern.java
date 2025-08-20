@@ -54,4 +54,7 @@ public class Intern extends BaseEntity {
     @Column(name = "manager_email")
     private String managerEmail;
 
+    @Column(name = "is_active", nullable = false)
+    private int isActive = 1;
+
 }
