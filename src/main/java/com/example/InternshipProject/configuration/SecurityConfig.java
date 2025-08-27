@@ -20,10 +20,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults()) // Burası corsConfigurationSource bean'ini kullanır
+                // 1. CORS yapılandırmasını en üste alalım ve kaynağını belirtelim.
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                // 2. CSRF'i devre dışı bırakalım (API'lar için standart).
                 .csrf(csrf -> csrf.disable())
+
+                // 3. Tüm HTTP isteklerine, kimlik doğrulaması olmadan izin verelim.
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Şimdilik tüm isteklere izin veriliyor
+                        .anyRequest().permitAll()
                 );
 
         return http.build();

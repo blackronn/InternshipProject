@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/interns")
 @CrossOrigin(origins = "http://localhost:8085")
-
 public class InternController {
 
     private final InternService internService;
@@ -63,7 +62,7 @@ public class InternController {
     @GetMapping("/{mentorId}/interns")
     public ResponseEntity<List<InternResponse>> getInternsByMentorId(@PathVariable Integer mentorId) {
         List<InternResponse> interns = internService.findInternsByMentorId(mentorId);
-        return ResponseEntity.ok(interns);
+        return ResponseEntity.ok(internService.findInternsByMentorId(mentorId));
     }
 
     @GetMapping("/by-email") // YENİ HALİ

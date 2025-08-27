@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/announcements")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8085")
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;

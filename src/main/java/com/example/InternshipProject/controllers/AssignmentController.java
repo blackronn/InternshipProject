@@ -25,6 +25,7 @@ import jakarta.persistence.criteria.Predicate;
 @RestController
 @RequestMapping("/api/assignments")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8085")
 public class AssignmentController {
 
     private final AssignmentService assignmentService;

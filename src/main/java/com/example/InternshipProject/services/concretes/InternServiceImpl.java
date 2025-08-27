@@ -149,10 +149,17 @@ public class InternServiceImpl implements InternService {
 
         // Mentor bilgisini de bu merkezi metoda taşıyoruz
         List<InternMentorRelation> relations = relationRepository.findByIntern(intern);
-        if (relations != null && !relations.isEmpty()) {
+
+        // Güvenlik Kontrolü: İlişki var mı VE o ilişkideki mentor null değil mi?
+        if (relations != null && !relations.isEmpty() && relations.get(0).getMentor() != null) {
             Mentor mentor = relations.get(0).getMentor();
             response.setMentorName(mentor.getName() + " " + mentor.getSurname());
             response.setMentorEmail(mentor.getEmail());
+        } else {
+            // Eğer mentor yoksa, bu alanları boş veya null olarak bırak.
+            // Bu sayede frontend hata almaz.
+            response.setMentorName(null);
+            response.setMentorEmail(null);
         }
 
         return response;
