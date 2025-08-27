@@ -59,10 +59,10 @@ public class InternController {
 
     }
 
-    @GetMapping("/{mentorId}/interns")
+    @GetMapping("/mentor/{mentorId}")
     public ResponseEntity<List<InternResponse>> getInternsByMentorId(@PathVariable Integer mentorId) {
         List<InternResponse> interns = internService.findInternsByMentorId(mentorId);
-        return ResponseEntity.ok(internService.findInternsByMentorId(mentorId));
+        return ResponseEntity.ok(interns);
     }
 
     @GetMapping("/by-email") // YENİ HALİ

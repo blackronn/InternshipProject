@@ -58,6 +58,8 @@ public class InternServiceImpl implements InternService {
         internRepository.save(intern);
     }
 
+
+
     @Override
     public Intern deleteInternByID(int id) {
         Intern intern = getInternByID(id);
