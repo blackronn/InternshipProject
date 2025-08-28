@@ -53,21 +53,5 @@ public class Assignment extends BaseEntity {
 
     @Column(name="STARTED_AT")
     private LocalDate startedAt;
-<<<<<<< HEAD
-=======
-    // [ADDED] ilerleme yüzdesi (0..100) ve yorum
-    @Column(name = "PROGRESS")
-    private Integer progress;   // null gelirse service 0'a çeker
-
-    @Column(name = "PROGRESS_NOTE", length = 2000)
-    private String progressNote; // kullanıcı yorumu
-
-    // İsteğe bağlı: default değerler için
-    @PrePersist
-    public void onCreate() {
-        if (this.progress == null) this.progress = 0;
-        if (this.getStatus() == null) this.setStatus("Not Started"); // mevcut yapıya uygun string kullanıyoruz
-    }
->>>>>>> 049e957 (feat: backend project initial push)
 
 }

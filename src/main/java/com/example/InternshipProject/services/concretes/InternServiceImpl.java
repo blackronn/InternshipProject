@@ -58,11 +58,8 @@ public class InternServiceImpl implements InternService {
         internRepository.save(intern);
     }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 049e957 (feat: backend project initial push)
     @Override
     public Intern deleteInternByID(int id) {
         Intern intern = getInternByID(id);
@@ -154,7 +151,6 @@ public class InternServiceImpl implements InternService {
 
         // Mentor bilgisini de bu merkezi metoda taşıyoruz
         List<InternMentorRelation> relations = relationRepository.findByIntern(intern);
-<<<<<<< HEAD
 
         // Güvenlik Kontrolü: İlişki var mı VE o ilişkideki mentor null değil mi?
         if (relations != null && !relations.isEmpty() && relations.get(0).getMentor() != null) {
@@ -166,12 +162,6 @@ public class InternServiceImpl implements InternService {
             // Bu sayede frontend hata almaz.
             response.setMentorName(null);
             response.setMentorEmail(null);
-=======
-        if (relations != null && !relations.isEmpty()) {
-            Mentor mentor = relations.get(0).getMentor();
-            response.setMentorName(mentor.getName() + " " + mentor.getSurname());
-            response.setMentorEmail(mentor.getEmail());
->>>>>>> 049e957 (feat: backend project initial push)
         }
 
         return response;

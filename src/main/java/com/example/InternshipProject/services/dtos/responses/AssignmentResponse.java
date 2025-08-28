@@ -20,10 +20,4 @@ public class AssignmentResponse {
     private Integer mentorId;
     private String mentorName;
     private String internName;
-<<<<<<< HEAD
-=======
-    // [ADDED]
-    private Integer progress;
-    private String progressNote;
->>>>>>> 049e957 (feat: backend project initial push)
 }

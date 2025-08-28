@@ -13,10 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/announcements")
 @RequiredArgsConstructor
-<<<<<<< HEAD
 @CrossOrigin(origins = "http://localhost:8085")
-=======
->>>>>>> 049e957 (feat: backend project initial push)
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;

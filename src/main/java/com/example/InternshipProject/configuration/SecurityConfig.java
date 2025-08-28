@@ -20,7 +20,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-<<<<<<< HEAD
                 // 1. CORS yapılandırmasını en üste alalım ve kaynağını belirtelim.
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
@@ -30,12 +29,6 @@ public class SecurityConfig {
                 // 3. Tüm HTTP isteklerine, kimlik doğrulaması olmadan izin verelim.
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
-=======
-                .cors(withDefaults()) // Burası corsConfigurationSource bean'ini kullanır
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Şimdilik tüm isteklere izin veriliyor
->>>>>>> 049e957 (feat: backend project initial push)
                 );
 
         return http.build();
