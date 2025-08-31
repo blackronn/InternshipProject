@@ -8,4 +8,6 @@ import java.util.List;
 public interface AnnouncementService {
     void createAnnouncement(CreateAnnouncementRequest request);
     List<AnnouncementResponse> getRecentAnnouncements(String internEmail);
+    void deleteAnnouncement(Integer id);
+    List<AnnouncementResponse> getAnnouncementsByMentorId(Long mentorId);
 }

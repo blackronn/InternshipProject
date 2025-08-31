@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/announcements")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:8085")
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;
@@ -27,5 +27,20 @@ public class AnnouncementController {
     public ResponseEntity<List<AnnouncementResponse>> getRecentAnnouncements(@RequestParam("email") String email) {
         return ResponseEntity.ok(announcementService.getRecentAnnouncements(email));
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAnnouncement(@PathVariable Integer id) {
+        announcementService.deleteAnnouncement(id);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/mentor/{mentorId}")
+    public ResponseEntity<List<AnnouncementResponse>> getAnnouncementsByMentor(@PathVariable Long mentorId) {
+        try {
+            List<AnnouncementResponse> announcements = announcementService.getAnnouncementsByMentorId(mentorId);
+            return ResponseEntity.ok(announcements);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(new ArrayList<>());
+        }
+    }
 }
+

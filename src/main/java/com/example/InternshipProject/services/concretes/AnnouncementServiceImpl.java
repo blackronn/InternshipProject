@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +55,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         return announcements.stream()
                 .map(a -> new AnnouncementResponse(
+                        a.getId(),
                         a.getTitle(),
                         a.getContent(),
                         a.getCreatedAt(),
@@ -62,6 +64,38 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .toList();
     }
 
+    @Override
+    public void deleteAnnouncement(Integer id) {
+        if (!announcementRepository.existsById(Long.valueOf(id))) {
+            throw new RuntimeException("Announcement not found with id: " + id);
+        }
+        announcementRepository.deleteById(Long.valueOf(id));
+
+    }
+
+    @Override
+    public List<AnnouncementResponse> getAnnouncementsByMentorId(Long mentorId) {
+        try {
+            List<Announcement> announcements = announcementRepository.findByMentorIdOrderByCreatedAtDesc(mentorId);
+
+            return announcements.stream()
+                    .map(announcement -> {
+                        AnnouncementResponse response = new AnnouncementResponse();
+                        response.setId(announcement.getId()); // ID'yi set etmeyi unutmayın!
+                        response.setTitle(announcement.getTitle());
+                        response.setContent(announcement.getContent());
+                        response.setCreatedAt(LocalDateTime.parse(announcement.getCreatedAt().toString()));
+                        response.setMentorId((long) announcement.getMentor().getId());
+                        return response;
+                    })
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            System.err.println("getAnnouncementsByMentorId hatası: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
 
 
 }
