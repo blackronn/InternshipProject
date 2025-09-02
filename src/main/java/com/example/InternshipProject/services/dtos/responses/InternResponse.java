@@ -1,8 +1,10 @@
 package com.example.InternshipProject.services.dtos.responses;
 
+import com.example.InternshipProject.entities.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class InternResponse {
     private OfficeResponse office;// "Ad Soyad" format or null
     private String managerEmail;
 
+    private Gender gender;
 
     private String startDate;
     private String endDate;

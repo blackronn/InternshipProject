@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.example.InternshipProject.entities.Gender;
 
 @Entity
 @Table(name="MENTOR")
@@ -38,4 +39,9 @@ public class Mentor extends BaseEntity {
 
     @Column(name="TITLE")
     private String title;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private Gender gender = Gender.UNSPECIFIED;
+
 }

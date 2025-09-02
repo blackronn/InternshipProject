@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+import com.example.InternshipProject.entities.Gender;
+
 @Entity
 @Table(name="INTERN")
 @Getter
@@ -56,5 +58,9 @@ public class Intern extends BaseEntity {
 
     @Column(name = "is_active", nullable = false)
     private int isActive = 1;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Gender gender = Gender.UNSPECIFIED;
 
 }
